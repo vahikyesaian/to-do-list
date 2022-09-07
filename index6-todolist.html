@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<link rel="stylesheet" href="fontello-c483a7fc/css/fontello.css">
+<style>
+    *{
+        box-sizing: border-box;
+    }
+    li{
+        list-style-type: none;
+    }
+    main{
+        background-image: linear-gradient(62deg, rgba(1, 95, 183, 0.9732216701) 13%, rgba(255, 122, 151, 0.5) 4%), linear-gradient(44deg, rgba(0, 43, 99, 0.0792209024) 39%, rgba(242, 140, 143, 0.5) 18%), linear-gradient(118deg, rgba(84, 202, 242, 0.0315299727) 40%, rgba(247, 155, 187, 0.5) 54%), linear-gradient(58deg, rgba(90, 90, 237, 0.1614444357) 83%, rgba(249, 156, 142, 0.5) 23%);
+        height: 100vh;
+    }
+    main>div{
+        border-radius: 5px;
+        background-image: linear-gradient(35deg, rgb(79, 74, 74), rgb(44, 40, 40), rgb(90, 85, 85) );
+        /* max-height: 50%; */
+
+       
+    }
+    main>div>h3{
+        font-size: 21px;
+        text-transform: capitalize;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        color: aliceblue;
+        
+    }
+    main>div>.row{
+        position: relative;
+    }
+    main>div>.row>input{
+        background-image: linear-gradient(35deg, rgb(24, 23, 23), rgb(13, 12, 12), rgb(23, 22, 22) );
+        border-bottom: 1px solid whitesmoke;
+        color: aliceblue;
+        border: none;
+        border-radius: 5px;
+        position: relative;
+        /* margin-left: 30px; */
+    }
+    main>div>.row::after{
+        content: '';
+        display: block;
+        width: 74.5%;
+        height: 1px;
+        background-color: white;
+        position: absolute;
+        border-radius: 2px;
+        top: 35px;left: 25px;
+        box-shadow: 0 1px 10px rgba(255, 255, 255, 0.658);
+
+    }
+    main>div>.row>input:focus{
+        outline: none;
+    }
+
+    main>div>.row>button{
+        font-size: 20px;
+        background-color: #ba838b;
+        color: white;
+        border-radius: 5px;
+    }
+    .ex>span{
+        cursor: pointer;
+        transition: .4s;
+    }
+    .ex>span:hover{
+        background-color: rgba(169, 169, 169, 0.521);
+        color: rgb(255, 0, 0);
+    }
+    .ex>span>i{
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+    <main class="col-12 row justify-content-center align-items-center border m-0 ">
+        <div class="col-10 col-md-6 ">
+            <h3 class="m-3">to do list</h3>
+            <div class="row">
+                <input type="text" class="enter col-10 col-md-9 ms-0 ms-md-4" name="text" placeholder="Add New Text" autofocus>
+                <button onclick="_add()" class="col-2 pb-0 pb-md-1 border-0" id="add">+</button>
+                <button onclick="secedit()" class="col-2 ms-4 d-none" id="edit">Edit</button>
+            </div>
+            <ul class="lst">
+                <li class="col-12 d-flex justify-content-center" id="select1">
+                    <div class="row ex text-white border my-3 col-12 col-md-11 me-3">
+                        <h3 class="col-8">Example</h3>
+                        <span onclick="_edit(this)" class="col-2 d-flex justify-content-center align-items-center"><i class="icon-demo icon-pencil ">Edit</i></span>
+                        <span onclick="_delete(this)" class="col-2 d-flex justify-content-center align-items-center"><i class="icon-demo icon-trash-empty ">Delete</i></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+</body>
+<script>
+    let _id= 1
+    function _add(){
+      let va=  document.getElementsByClassName('enter')[0].value
+      if(va == ''|| va == null){
+        alert('please fill out the form')
+      }else{
+       let _y= document.createElement('li')
+       _y.classList.add('col-12','d-flex','justify-content-center','my-2')
+       _y.style.borderRadius='5px'
+       _y.style.border='none'
+       _y.style.color='aliceblue'
+       _y.style.transition='1s'
+       _id++
+       _y.setAttribute('id','select'+_id)
+       _y.innerHTML=`
+
+       <div class="row ex text-white my-2  col-12 col-md-11 me-3 bg-black">
+                        <h3 class="col-8">${va}</h3>
+                        <span onclick="_edit(this)" class="col-2 d-flex justify-content-center align-items-center"><i class="icon-demo icon-pencil ">Edit</i></span>
+                        <span onclick="_delete(this)" class="col-2 d-flex justify-content-center align-items-center"><i class="icon-demo icon-trash-empty ">Delete</i></span>
+        </div>
+ 
+       
+       `
+
+       document.getElementsByClassName('lst')[0].appendChild(_y)
+       document.getElementsByClassName('enter')[0].value=null
+       document.getElementsByClassName('enter')[0].focus()
+
+
+      }
+    }
+    function _delete(mine){
+        if(confirm('Are you sure you want to delete this?')){
+            mine.parentElement.parentElement.remove()
+        }
+    }
+    let turn
+    function _edit(yours){
+       document.getElementsByClassName('enter')[0].value=(yours.previousElementSibling.innerText)
+       turn=yours.parentElement.parentElement.getAttribute('id')
+       
+
+       document.getElementById('add').classList.add('d-none')
+       document.getElementById('edit').classList.remove('d-none')
+
+    }
+    function secedit(){
+        // alert('#'+turn+'>div>h3')
+      turn= document.querySelector('#'+turn+'>div>h3').innerText= (document.getElementsByClassName('enter')[0].value)
+      document.getElementById('add').classList.remove('d-none')
+       document.getElementById('edit').classList.add('d-none')
+       document.getElementsByClassName('enter')[0].value=null
+       document.getElementsByClassName('enter')[0].focus()
+    }
+
+</script>
+</html>
